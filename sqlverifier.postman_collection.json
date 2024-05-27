@@ -1,0 +1,4410 @@
+{
+	"info": {
+		"_postman_id": "2d03272e-4b90-47d2-8aaa-b2b7df4a3ed5",
+		"name": "sqlverifier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5430351"
+	},
+	"item": [
+		{
+			"name": "Lesson 4.1",
+			"item": [
+				{
+					"name": "User_registraion",
+					"item": [
+						{
+							"name": "Only_required_params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Activated is false by default\", function () {\r",
+											"            pm.expect(getUserResponse.activated).to.eql(false);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Role is ROLE_USER_STUDENT by default\", function () {\r",
+											"            pm.expect(getUserResponse.authorities).to.eql([\"ROLE_USER_STUDENT\"]);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All_possible_params_student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let req_login = JSON.parse(pm.request.body.raw).login;\r",
+											"let req_email = JSON.parse(pm.request.body.raw).email;\r",
+											"let req_firstName = JSON.parse(pm.request.body.raw).firstName;\r",
+											"let req_lastName = JSON.parse(pm.request.body.raw).lastName;\r",
+											"let req_image = JSON.parse(pm.request.body.raw).imageUrl;\r",
+											"let req_lang = \"en\";\r",
+											"let req_id = JSON.parse(pm.request.body.raw).id;\r",
+											"let req_createdDate = JSON.parse(pm.request.body.raw).createdDate;\r",
+											"let req_lastModifiedDate = JSON.parse(pm.request.body.raw).lastModifiedDate;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + req_login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + req_login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"\r",
+											"        pm.test(\"User id has been generated automatically\", function () {\r",
+											"            pm.expect(getUserResponse.id).to.not.eql(req_id);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Activated is set to false by default\", function () {\r",
+											"            pm.expect(getUserResponse.activated).to.eql(false);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"User is created by admin\", function () {\r",
+											"            pm.expect(getUserResponse.createdBy).to.eql(pm.environment.get('admin'));\r",
+											"            pm.expect(getUserResponse.lastModifiedBy).to.eql(pm.environment.get('admin'));\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"createdDate has been generated automatically\", function () {\r",
+											"            pm.expect(getUserResponse.createdDate).to.not.eql(req_createdDate);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"lastModifiedDate has been generated automatically\", function () {\r",
+											"            pm.expect(getUserResponse.lastModifiedDate).to.not.eql(req_lastModifiedDate);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Check created user login\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(req_login);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Check created user email\", function () {\r",
+											"            pm.expect(getUserResponse.email).to.eql(req_email);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Check created user firstName\", function () {\r",
+											"            pm.expect(getUserResponse.firstName).to.eql(req_firstName);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Check created user lastName\", function () {\r",
+											"            pm.expect(getUserResponse.lastName).to.eql(req_lastName);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Check image url\", function () {\r",
+											"            pm.expect(getUserResponse.imageUrl).to.eql(req_image);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"langKey is \" + req_lang, function () {\r",
+											"            pm.expect(getUserResponse.langKey).to.eql(req_lang);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Profile is set to ROLE_USER_STUDENT\", function () {\r",
+											"            pm.expect(getUserResponse.authorities).to.eql([\"ROLE_USER_STUDENT\"]);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + req_login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": 1234,\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"imageUrl\": \"{{$randomAvatarImage}}\",\r\n  \"activated\": true,\r\n  \"langKey\": \"en\",\r\n  \"createdBy\": \"me\",\r\n  \"createdDate\": \"2024-05-22T00:15:11.910Z\",\r\n  \"lastModifiedBy\": \"me\",\r\n  \"lastModifiedDate\": \"2024-05-22T00:15:11.910Z\",\r\n  \"authorities\": [\r\n    \"ROLE_USER_STUDENT\"\r\n  ],\r\n  \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Admin_profile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Role is ROLE_ADMIN\", function () {\r",
+											"            pm.expect(getUserResponse.authorities).to.eql([\"ROLE_ADMIN\"]);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"authorities\": [\r\n        \"ROLE_ADMIN\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Teacher_profile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Role is ROLE_USER_TEACHER\", function () {\r",
+											"            pm.expect(getUserResponse.authorities).to.eql([\"ROLE_USER_TEACHER\"]);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"authorities\": [\r\n        \"ROLE_USER_TEACHER\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Not_existing_role",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"authorities\": [\r\n        \"ROLE_BOSS\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Several_roles",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"Assigned roles are: ROLE_USER_TEACHER and ROLE_USER_STUDENT\", function () {\r",
+											"            pm.expect(getUserResponse.authorities).to.include(\"ROLE_USER_TEACHER\");\r",
+											"            pm.expect(getUserResponse.authorities).to.include(\"ROLE_USER_STUDENT\");\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\",\r\n    \"authorities\": [\r\n        \"ROLE_USER_TEACHER\",\r\n        \"ROLE_USER_STUDENT\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_user_by_student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.environment.unset('studentBearerToken');"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('student_login'),\r",
+											"            \"password\": pm.environment.get('student_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"studentBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_user_by_teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.environment.unset('teacherBearerToken');"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('teacher_login'),\r",
+											"            \"password\": pm.environment.get('teacher_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"teacherBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{teacherBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "anonymousUser_request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.test(\"createdBy=anonymousUser\", function () {\r",
+											"            pm.expect(getUserResponse.createdBy).to.eql('anonymousUser');\r",
+											"            pm.expect(getUserResponse.lastModifiedBy).to.eql('anonymousUser');\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login_is_missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message\", function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"login\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must not be blank\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login_is_null",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message\", function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"login\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must not be blank\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": null,\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "email_is_missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "email_is_null",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": null,\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "password_is_missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message\", function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"password\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must not be blank\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "password_is_null",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message\", function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"password\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must not be blank\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login_invalid_format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message: login \" + response.fieldErrors[0].message, function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"login\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.include(\"must match\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka {{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "email_invalid_format",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message: email \" + response.fieldErrors[0].message, function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"email\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must be a well-formed email address\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_with_already_existing_login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + pm.environment.get(\"user_login\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: user with login \" + pm.environment.get(\"user_login\") + \" has been deleted\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"        pm.environment.unset(\"user_login\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let login = `shurka_${pm.variables.replaceIn('{{$randomInt}}')}`;\r",
+											"\r",
+											"const registerUserRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/register\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"login\": login,\r",
+											"            \"email\": `shurka_${pm.variables.replaceIn('{{$randomInt}}')}@${pm.variables.replaceIn('{{$randomDomainWord}}')}.${pm.variables.replaceIn('{{$randomDomainSuffix}}')}`,\r",
+											"            \"password\": pm.variables.replaceIn('{{$randomPassword}}')\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(registerUserRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Pre-request script: user with login=\" + login + \" has been registered\", function () {\r",
+											"            pm.expect(res).to.have.status(201);\r",
+											"        });\r",
+											"        pm.environment.set(\"user_login\", login)\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": {{user_login}},\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register_with_already_existing_email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + pm.environment.get(\"existingLogin\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: user with login \" + pm.environment.get(\"existingLogin\") + \" has been deleted\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"        pm.environment.unset(\"existingLogin\");\r",
+											"        pm.environment.unset(\"existingEmail\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let email = `shurka_${pm.variables.replaceIn('{{$randomInt}}')}@${pm.variables.replaceIn('{{$randomDomainWord}}')}.${pm.variables.replaceIn('{{$randomDomainSuffix}}')}`;\r",
+											"let login = `shurka_${pm.variables.replaceIn('{{$randomInt}}')}`;\r",
+											"\r",
+											"const registerUserRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/register\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"login\": login,\r",
+											"            \"email\": email,\r",
+											"            \"password\": pm.variables.replaceIn('{{$randomPassword}}')\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(registerUserRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Pre-request script: user with email=\" + email + \" has been registered\", function () {\r",
+											"            pm.expect(res).to.have.status(201);\r",
+											"        });\r",
+											"        pm.environment.set(\"existingEmail\", email);\r",
+											"        pm.environment.set(\"existingLogin\", login);\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"shurka_{{$randomInt}}\",\r\n    \"email\": {{existingEmail}},\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Password_length_less_than_4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message: password \" + response.fieldErrors[0].message, function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"password\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"size must be between 4 and 100\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Password_length_4",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Password_length_more_than_100",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message: password \" + response.fieldErrors[0].message, function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"password\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"size must be between 4 and 100\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"Pf3TVjOBCO2ohLOg77a7Of8jZ1WQY758wd0Yp7RjEVOKxSqZmISgjbsQPtuqZ2d3FYHnPMgcdQyXvnKhJAD4xu9tadEfWxpLOtapX\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Password_length_100",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": \"Pf3TVjOBCO2ohLOg77a7Of8jZ1WQY758wd0Yp7RjEVOKxSqZmISgjbsQPtuqZ2d3FYHnPMgcdQyXvnKhJAD4xu9tadEfWxpLOtap\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_length_1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"s\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_length_less_than_1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check if fieldErrors contains specific error message\", function () {\r",
+											"    let messages = response.fieldErrors.map(error => error.message);\r",
+											"    pm.expect(messages).to.include(\"size must be between 1 and 50\");\r",
+											"    pm.expect(messages).to.include(\"must not be blank\");\r",
+											"    pm.expect(messages).to.include(\"must match \\\"^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$\\\"\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_length_50",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let login = JSON.parse(pm.request.body.raw).login;\r",
+											"let email = JSON.parse(pm.request.body.raw).email;\r",
+											"\r",
+											"\r",
+											"const getUserInfo = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + login,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getUserInfo, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        let getUserResponse = response.json();\r",
+											"        pm.test(\"Created user with login=\" + login + \" and email=\" + email + \" exists in system\", function () {\r",
+											"            pm.expect(getUserResponse.login).to.eql(login);\r",
+											"            pm.expect(getUserResponse.email).to.eql(email);\r",
+											"        });\r",
+											"\r",
+											"        pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"            if (err) {\r",
+											"                console.log(err);\r",
+											"            } else {\r",
+											"                pm.test(\"Status code is 204: user with login \" + login + \" has been deleted\", function () {\r",
+											"                    pm.expect(response).to.have.status(204);\r",
+											"                });\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"um5j5l01znw5w1j89xv0pk655xx7395n3msjjz4frn6akb8ny7\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_length_more_than_50",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking fieldErrors message: login \" + response.fieldErrors[0].message, function () {\r",
+											"    pm.expect(response.fieldErrors[0].field).to.eql(\"login\");\r",
+											"    pm.expect(response.fieldErrors[0].message).to.eql(\"size must be between 1 and 50\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"um5j5l01znw5w1j89xv0pk655xx7395n3msjjz4frn6akb8ny78\",\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login_is_not_string",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": 1234,\r\n    \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Password_is_not_string",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": \"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\",\r\n  \"password\": 1234\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "email_is_not_string",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"shurka_{{$randomInt}}\",\r\n  \"email\": [\"shurka_{{$randomInt}}@{{$randomDomainWord}}.{{$randomDomainSuffix}}\"],\r\n  \"password\": \"{{$randomPassword}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/register",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User_authentication",
+					"item": [
+						{
+							"name": "Authenticate_admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id_token is available in the response body\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\").which.is.not.null; \r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"{{admin}}\",\r\n    \"password\": \"{{admin}}\",\r\n    \"rememberMe\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authenticate_student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id_token is available in the response body\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\").which.is.not.null; \r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"{{student_login}}\",\r\n    \"password\": \"{{student_password}}\",\r\n    \"rememberMe\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authenticate_teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id_token is available in the response body\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\").which.is.not.null; \r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"{{teacher_login}}\",\r\n    \"password\": \"{{teacher_password}}\",\r\n    \"rememberMe\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Only_required_params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id_token is available in the response body\", function () {\r",
+											"    pm.expect(pm.response.json()).to.have.property(\"id_token\").which.is.not.null; \r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"{{admin}}\",\r\n    \"password\": \"{{admin}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong_password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"{{student_login}}\",\r\n    \"password\": \"1234\",\r\n    \"rememberMe\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Not_existing_username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"teacher\",\r\n    \"password\": \"{{teacher_password}}\",\r\n    \"rememberMe\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authenticate_new_not_activated_user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking message: \" + pm.response.json().detail, function () {\r",
+											"    pm.expect(pm.response.json().detail).to.eql(\"User \" + pm.environment.get(\"userLogin\") + \" was not activated\"); \r",
+											"});\r",
+											"\r",
+											"const cleanupUser = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/admin/users/\" + pm.environment.get(\"userLogin\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(cleanupUser, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: user with login \" + pm.environment.get(\"userLogin\") + \" has been deleted\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"        pm.environment.unset(\"userLogin\");\r",
+											"        pm.environment.unset(\"userPassword\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let login = `shurka_${pm.variables.replaceIn('{{$randomInt}}')}`;\r",
+											"let password = pm.variables.replaceIn('{{$randomPassword}}');\r",
+											"\r",
+											"const registerUserRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/register\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"login\": login,\r",
+											"            \"email\": `shurka_${pm.variables.replaceIn('{{$randomInt}}')}@${pm.variables.replaceIn('{{$randomDomainWord}}')}.${pm.variables.replaceIn('{{$randomDomainSuffix}}')}`,\r",
+											"            \"password\": password\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(registerUserRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Pre-request script: user with login=\" + login + \" has been registered\", function () {\r",
+											"            pm.expect(res).to.have.status(201);\r",
+											"        });\r",
+											"        pm.environment.set(\"userLogin\", login);\r",
+											"        pm.environment.set(\"userPassword\", password);\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"{{userLogin}}\",\r\n    \"password\": \"{{userPassword}}\",\r\n    \"rememberMe\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/authenticate",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Lesson 4.2",
+			"item": [
+				{
+					"name": "Create_task",
+					"item": [
+						{
+							"name": "Create_task_by_admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"let response = pm.response.json();\r",
+											"\r",
+											"let expectedText = JSON.parse(pm.request.body.raw).text;\r",
+											"let expectedAnswer = JSON.parse(pm.request.body.raw).answer;\r",
+											"let expectedTitle = JSON.parse(pm.request.body.raw).title;\r",
+											"\r",
+											"pm.test(\"Checking that new task has generated id\", function () {\r",
+											"    pm.expect(response.id).to.be.a('number').and.to.be.above(0);\r",
+											"});\r",
+											"let taskId = response.id;\r",
+											"\r",
+											"pm.test(\"Checking text of the task with id=\" + taskId, function () {\r",
+											"    pm.expect(response.text).to.eql(expectedText);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking title of the task with id=\" + taskId, function () {\r",
+											"    pm.expect(response.title).to.eql(expectedTitle);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking answer of the task with id=\" + taskId, function () {\r",
+											"    pm.expect(response.answer).to.eql(expectedAnswer);\r",
+											"});\r",
+											"\r",
+											"const cleanupTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + taskId,\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(cleanupTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: task with id \" + taskId + \" has been deleted\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"text\": \"{{$randomPhrase}}\",\r\n  \"answer\": \"{{$randomCatchPhrase}}\",\r\n  \"title\": \"{{$randomWords}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create_task_by_student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.environment.unset(\"studentBearerToken\");"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('student_login'),\r",
+											"            \"password\": pm.environment.get('student_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"studentBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"text\": \"{{$randomPhrase}}\",\r\n  \"answer\": \"{{$randomCatchPhrase}}\",\r\n  \"title\": \"{{$randomWords}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create_task_by_teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.environment.unset('teacherBearerToken');"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('teacher_login'),\r",
+											"            \"password\": pm.environment.get('teacher_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"teacherBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{teacherBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"text\": \"{{$randomPhrase}}\",\r\n  \"answer\": \"{{$randomCatchPhrase}}\",\r\n  \"title\": \"{{$randomWords}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create_task_without_auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"text\": \"{{$randomPhrase}}\",\r\n  \"answer\": \"{{$randomCatchPhrase}}\",\r\n  \"title\": \"{{$randomWords}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Text_is_missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"answer\": \"{{$randomCatchPhrase}}\",\r\n  \"title\": \"{{$randomWords}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Title_is_missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"text\": \"{{$randomPhrase}}\",\r\n  \"answer\": \"{{$randomCatchPhrase}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Answer_is_missing",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"text\": \"{{$randomPhrase}}\",\r\n  \"title\": \"{{$randomWords}}\"\r\n}  \r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Full_task_update",
+					"item": [
+						{
+							"name": "Update_task_by_admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id of the task is \" + pm.environment.get(\"taskId\"), function () {\r",
+											"    pm.expect(response.id).to.eql(pm.environment.get(\"taskId\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text has been updated\", function () {\r",
+											"    pm.expect(response.text).to.not.eql(pm.environment.get(\"taskText\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Answer has been updated\", function () {\r",
+											"    pm.expect(response.answer).to.not.eql(pm.environment.get(\"taskAnswer\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Title has been updated\", function () {\r",
+											"    pm.expect(response.title).to.not.eql(pm.environment.get(\"taskTitle\"));\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"taskText\", response.text);\r",
+											"pm.environment.set(\"taskTitle\", response.title);\r",
+											"pm.environment.set(\"taskAnswer\", response.answer);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomPhrase}}\",\r\n    \"answer\": \"{{$randomCatchPhrase}}\",\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_by_teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.environment.unset('teacherBearerToken');"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('teacher_login'),\r",
+											"            \"password\": pm.environment.get('teacher_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"teacherBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{teacherBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomPhrase}}\",\r\n    \"answer\": \"{{$randomCatchPhrase}}\",\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_by_student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"pm.environment.unset(\"studentBearerToken\");"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('student_login'),\r",
+											"            \"password\": pm.environment.get('student_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"studentBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomPhrase}}\",\r\n    \"answer\": \"{{$randomCatchPhrase}}\",\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_without_auth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomPhrase}}\",\r\n    \"answer\": \"{{$randomCatchPhrase}}\",\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_not_existing_task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 123,\r\n    \"text\": \"{{$randomPhrase}}\",\r\n    \"answer\": \"{{$randomCatchPhrase}}\",\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/123",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_not_all_params",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"const cleanupTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + pm.environment.get(\"taskId\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(cleanupTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: task with id \" + pm.environment.get(\"taskId\") + \" has been deleted\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"\r",
+											"        pm.environment.unset(\"taskId\");\r",
+											"        pm.environment.unset(\"taskText\");\r",
+											"        pm.environment.unset(\"taskTitle\");\r",
+											"        pm.environment.unset(\"taskAnswer\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"if (!pm.environment.get(\"taskId\")) {\r",
+									"\r",
+									"\r",
+									"    let taskText = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+									"    let taskTitle = pm.variables.replaceIn('{{$randomWords}}');\r",
+									"    let taskAnswer = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+									"\r",
+									"    const newTaskRequest = {\r",
+									"        url: pm.environment.get(\"basic_url\") + \"/api/tasks\",\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"            'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify({\r",
+									"                \"text\": taskText,\r",
+									"                \"title\": taskTitle,\r",
+									"                \"answer\": taskAnswer\r",
+									"            })\r",
+									"        }\r",
+									"    };\r",
+									"\r",
+									"    pm.sendRequest(newTaskRequest, (err, res) => {\r",
+									"        if (err) {\r",
+									"            console.log(err);\r",
+									"        } else {\r",
+									"            if (!res.json().hasOwnProperty('id')) {\r",
+									"                throw new Error(\"The response does not contain 'id'\");\r",
+									"            } else {\r",
+									"                pm.test(\"Pre-request script: task with title='\" + taskTitle + \"' has been created\", function () {\r",
+									"                    pm.expect(res).to.have.status(201);\r",
+									"                });\r",
+									"                pm.environment.set(\"taskText\", taskText);\r",
+									"                pm.environment.set(\"taskTitle\", taskTitle);\r",
+									"                pm.environment.set(\"taskAnswer\", taskAnswer);\r",
+									"                pm.environment.set(\"taskId\", res.json().id);\r",
+									"            }\r",
+									"        }\r",
+									"    });\r",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Partial_task_update",
+					"item": [
+						{
+							"name": "Update_task_title",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id of the task is \" + pm.environment.get(\"taskId\"), function () {\r",
+											"    pm.expect(response.id).to.eql(pm.environment.get(\"taskId\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Title has been updated\", function () {\r",
+											"    pm.expect(response.title).to.not.eql(pm.environment.get(\"taskTitle\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text is the same\", function () {\r",
+											"    pm.expect(response.text).to.eql(pm.environment.get(\"taskText\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Answer is the same\", function () {\r",
+											"    pm.expect(response.answer).to.eql(pm.environment.get(\"taskAnswer\"));\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"taskTitle\", response.title);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_answer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id of the task is \" + pm.environment.get(\"taskId\"), function () {\r",
+											"    pm.expect(response.id).to.eql(pm.environment.get(\"taskId\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Answer has been updated\", function () {\r",
+											"    pm.expect(response.answer).to.not.eql(pm.environment.get(\"taskAnswer\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Title is the same\", function () {\r",
+											"    pm.expect(response.title).to.eql(pm.environment.get(\"taskTitle\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text is the same\", function () {\r",
+											"    pm.expect(response.text).to.eql(pm.environment.get(\"taskText\"));\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"taskAnswer\", response.answer);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"answer\": \"{{$randomCatchPhrase}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_text",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id of the task is \" + pm.environment.get(\"taskId\"), function () {\r",
+											"    pm.expect(response.id).to.eql(pm.environment.get(\"taskId\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text has been updated\", function () {\r",
+											"    pm.expect(response.text).to.not.eql(pm.environment.get(\"taskText\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Answer is the same\", function () {\r",
+											"    pm.expect(response.answer).to.eql(pm.environment.get(\"taskAnswer\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Title is the same\", function () {\r",
+											"    pm.expect(response.title).to.eql(pm.environment.get(\"taskTitle\"));\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"taskText\", response.answer);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomPhrase}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update_task_full",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id of the task is \" + pm.environment.get(\"taskId\"), function () {\r",
+											"    pm.expect(response.id).to.eql(pm.environment.get(\"taskId\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text has been updated\", function () {\r",
+											"    pm.expect(response.text).to.not.eql(pm.environment.get(\"taskText\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Answer has been updated\", function () {\r",
+											"    pm.expect(response.answer).to.not.eql(pm.environment.get(\"taskAnswer\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Title has been updated\", function () {\r",
+											"    pm.expect(response.title).to.not.eql(pm.environment.get(\"taskTitle\"));\r",
+											"});\r",
+											"\r",
+											"pm.environment.set(\"taskText\", response.text);\r",
+											"pm.environment.set(\"taskTitle\", response.title);\r",
+											"pm.environment.set(\"taskAnswer\", response.answer);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomPhrase}}\",\r\n    \"answer\": \"{{$randomCatchPhrase}}\",\r\n    \"title\": \"{{$randomWords}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "No_update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"let response = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"id of the task is \" + pm.environment.get(\"taskId\"), function () {\r",
+											"    pm.expect(response.id).to.eql(pm.environment.get(\"taskId\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Title is the same\", function () {\r",
+											"    pm.expect(response.title).to.eql(pm.environment.get(\"taskTitle\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Text is the same\", function () {\r",
+											"    pm.expect(response.text).to.eql(pm.environment.get(\"taskText\"));\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Answer is the same\", function () {\r",
+											"    pm.expect(response.answer).to.eql(pm.environment.get(\"taskAnswer\"));\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"const cleanupTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + pm.environment.get(\"taskId\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(cleanupTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: task with id \" + pm.environment.get(\"taskId\") + \" has been deleted\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"\r",
+											"        pm.environment.unset(\"taskId\");\r",
+											"        pm.environment.unset(\"taskText\");\r",
+											"        pm.environment.unset(\"taskTitle\");\r",
+											"        pm.environment.unset(\"taskAnswer\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									"if (!pm.environment.get(\"taskId\")) {\r",
+									"\r",
+									"\r",
+									"    let taskText = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+									"    let taskTitle = pm.variables.replaceIn('{{$randomWords}}');\r",
+									"    let taskAnswer = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+									"\r",
+									"    const newTaskRequest = {\r",
+									"        url: pm.environment.get(\"basic_url\") + \"/api/tasks\",\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'Content-Type': 'application/json',\r",
+									"            'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify({\r",
+									"                \"text\": taskText,\r",
+									"                \"title\": taskTitle,\r",
+									"                \"answer\": taskAnswer\r",
+									"            })\r",
+									"        }\r",
+									"    };\r",
+									"\r",
+									"    pm.sendRequest(newTaskRequest, (err, res) => {\r",
+									"        if (err) {\r",
+									"            console.log(err);\r",
+									"        } else {\r",
+									"            if (!res.json().hasOwnProperty('id')) {\r",
+									"                throw new Error(\"The response does not contain 'id'\");\r",
+									"            } else {\r",
+									"                pm.test(\"Pre-request script: task with title='\" + taskTitle + \"' has been created\", function () {\r",
+									"                    pm.expect(res).to.have.status(201);\r",
+									"                });\r",
+									"                pm.environment.set(\"taskText\", taskText);\r",
+									"                pm.environment.set(\"taskTitle\", taskTitle);\r",
+									"                pm.environment.set(\"taskAnswer\", taskAnswer);\r",
+									"                pm.environment.set(\"taskId\", res.json().id);\r",
+									"            }\r",
+									"        }\r",
+									"    });\r",
+									"}"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete_task",
+					"item": [
+						{
+							"name": "Delete_existing_task_by_admin",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let taskText = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+											"let taskTitle = pm.variables.replaceIn('{{$randomWords}}');\r",
+											"let taskAnswer = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+											"\r",
+											"const newTaskRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"text\": taskText,\r",
+											"            \"title\": taskTitle,\r",
+											"            \"answer\": taskAnswer\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(newTaskRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        if (!res.json().hasOwnProperty('id')) {\r",
+											"            throw new Error(\"The response does not contain 'id'\");\r",
+											"        } else {\r",
+											"            pm.test(\"Pre-request script: task with title='\" + taskTitle + \"' has been created\", function () {\r",
+											"                pm.expect(res).to.have.status(201);\r",
+											"            });\r",
+											"            pm.environment.set(\"taskId\", res.json().id);\r",
+											"        }\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"const getTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + pm.environment.get(\"taskId\"),\r",
+											"    method: 'GET',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(getTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 404: task with id \" + pm.environment.get(\"taskId\") + \" is not found after deletion\", function () {\r",
+											"            pm.expect(response).to.have.status(404);\r",
+											"        });\r",
+											"\r",
+											"        pm.environment.unset(\"taskId\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete_existing_task_not_auth",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let taskText = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+											"let taskTitle = pm.variables.replaceIn('{{$randomWords}}');\r",
+											"let taskAnswer = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+											"\r",
+											"const newTaskRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"text\": taskText,\r",
+											"            \"title\": taskTitle,\r",
+											"            \"answer\": taskAnswer\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(newTaskRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        if (!res.json().hasOwnProperty('id')) {\r",
+											"            throw new Error(\"The response does not contain 'id'\");\r",
+											"        } else {\r",
+											"            pm.test(\"Pre-request script: task with title='\" + taskTitle + \"' has been created\", function () {\r",
+											"                pm.expect(res).to.have.status(201);\r",
+											"            });\r",
+											"            pm.environment.set(\"taskId\", res.json().id);\r",
+											"        }\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});\r",
+											"\r",
+											"const cleanupTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + pm.environment.get(\"taskId\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(cleanupTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: task with id \" + pm.environment.get(\"taskId\") + \" has been cleaned up after the test\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"\r",
+											"        pm.environment.unset(\"taskId\");\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete_existing_task_by_teacher",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let taskText = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+											"let taskTitle = pm.variables.replaceIn('{{$randomWords}}');\r",
+											"let taskAnswer = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+											"\r",
+											"const newTaskRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"text\": taskText,\r",
+											"            \"title\": taskTitle,\r",
+											"            \"answer\": taskAnswer\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(newTaskRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        if (!res.json().hasOwnProperty('id')) {\r",
+											"            throw new Error(\"The response does not contain 'id'\");\r",
+											"        } else {\r",
+											"            pm.test(\"Pre-request script: task with title='\" + taskTitle + \"' has been created\", function () {\r",
+											"                pm.expect(res).to.have.status(201);\r",
+											"            });\r",
+											"            pm.environment.set(\"taskId\", res.json().id);\r",
+											"        }\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('teacher_login'),\r",
+											"            \"password\": pm.environment.get('teacher_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"teacherBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"const cleanupTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + pm.environment.get(\"taskId\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(cleanupTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: task with id \" + pm.environment.get(\"taskId\") + \" has been cleaned up after the test\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"\r",
+											"        pm.environment.unset(\"taskId\");\r",
+											"        pm.environment.unset('teacherBearerToken');\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{teacherBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete_existing_task_by_student",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let taskText = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+											"let taskTitle = pm.variables.replaceIn('{{$randomWords}}');\r",
+											"let taskAnswer = pm.variables.replaceIn('{{$randomCatchPhrase}}');\r",
+											"\r",
+											"const newTaskRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks\",\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"text\": taskText,\r",
+											"            \"title\": taskTitle,\r",
+											"            \"answer\": taskAnswer\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(newTaskRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        if (!res.json().hasOwnProperty('id')) {\r",
+											"            throw new Error(\"The response does not contain 'id'\");\r",
+											"        } else {\r",
+											"            pm.test(\"Pre-request script: task with title='\" + taskTitle + \"' has been created\", function () {\r",
+											"                pm.expect(res).to.have.status(201);\r",
+											"            });\r",
+											"            pm.environment.set(\"taskId\", res.json().id);\r",
+											"        }\r",
+											"    }\r",
+											"});\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+											"    method: 'POST',\r",
+											"    header: 'Content-Type:application/json',\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            \"username\": pm.environment.get('teacher_login'),\r",
+											"            \"password\": pm.environment.get('teacher_password'),\r",
+											"            \"remeberMe\": true\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.environment.set(\"studentBearerToken\", res.json().id_token);\r",
+											"    }\r",
+											"})"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {\r",
+											"    pm.response.to.have.status(403);\r",
+											"});\r",
+											"\r",
+											"const cleanupTask = {\r",
+											"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + pm.environment.get(\"taskId\"),\r",
+											"    method: 'DELETE',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json',\r",
+											"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"\r",
+											"pm.sendRequest(cleanupTask, function (err, response) {\r",
+											"    if (err) {\r",
+											"        console.log(err);\r",
+											"    } else {\r",
+											"        pm.test(\"Status code is 204: task with id \" + pm.environment.get(\"taskId\") + \" has been cleaned up after the test\", function () {\r",
+											"            pm.expect(response).to.have.status(204);\r",
+											"        });\r",
+											"\r",
+											"        pm.environment.unset(\"taskId\");\r",
+											"        pm.environment.unset('studentBearerToken');\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentBearerToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/{{taskId}}",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete_not_existing_task_by_admin",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/123",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Invalid_task_id",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Checking detailed message\", function () {\r",
+											"    let jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.detail).to.include(\"Failed to convert 'id'\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{basic_url}}/api/tasks/test",
+									"host": [
+										"{{basic_url}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"test"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const getTokenRequest = {\r",
+					"    url: pm.environment.get(\"basic_url\") + \"/api/authenticate\",\r",
+					"    method: 'POST',\r",
+					"    header: 'Content-Type:application/json',\r",
+					"    body: {\r",
+					"        mode: 'raw',\r",
+					"        raw: JSON.stringify({\r",
+					"            \"username\": pm.environment.get(\"admin\"),\r",
+					"            \"password\": pm.environment.get(\"admin\"),\r",
+					"            \"remeberMe\": true\r",
+					"        })\r",
+					"    }\r",
+					"};\r",
+					"\r",
+					"\r",
+					"pm.sendRequest(getTokenRequest, (err, res) => {\r",
+					"    if (err) {\r",
+					"        console.log(err);\r",
+					"    } else {\r",
+					"        const jsonData = res.json();\r",
+					"        pm.environment.set(\"bearerToken\", jsonData.id_token);\r",
+					"    }\r",
+					"});\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
