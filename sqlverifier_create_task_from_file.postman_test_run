@@ -1,0 +1,233 @@
+{
+	"id": "6dc36279-59e8-4cae-8227-95174eebcd7e",
+	"name": "sqlverifier",
+	"timestamp": "2024-05-28T00:40:25.107Z",
+	"collection_id": "5430351-2d03272e-4b90-47d2-8aaa-b2b7df4a3ed5",
+	"folder_id": 0,
+	"environment_id": "5430351-d7461ece-cf0b-4ada-9db1-70b4902e37ba",
+	"totalPass": 42,
+	"delay": 0,
+	"persist": false,
+	"status": "finished",
+	"startedAt": "2024-05-28T00:40:19.680Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "4c0bc8bb-47d9-4ea1-905d-70bfff031c6b",
+			"name": "Create_task_data_from_file",
+			"url": "https://sqlverifier-staging-08050d656f7a.herokuapp.com/api/tasks",
+			"time": 209,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Checking that new task has generated id": true,
+				"Checking text of the task with id=43992": true,
+				"Checking title of the task with id=43992": true,
+				"Checking answer of the task with id=43992": true,
+				"Status code is 204: task with id 43992 has been deleted": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 7,
+					"fail": 0
+				},
+				"Checking that new task has generated id": {
+					"pass": 7,
+					"fail": 0
+				},
+				"Checking text of the task with id=43986": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43986": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43986": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43986 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking text of the task with id=43987": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43987": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43987": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43987 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking text of the task with id=43988": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43988": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43988": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43988 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking text of the task with id=43989": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43989": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43989": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43989 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking text of the task with id=43990": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43990": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43990": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43990 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking text of the task with id=43991": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43991": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43991": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43991 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking text of the task with id=43992": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking title of the task with id=43992": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Checking answer of the task with id=43992": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 204: task with id 43992 has been deleted": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				183,
+				197,
+				238,
+				267,
+				274,
+				205,
+				209
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43986": true,
+					"Checking title of the task with id=43986": true,
+					"Checking answer of the task with id=43986": true,
+					"Status code is 204: task with id 43986 has been deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43987": true,
+					"Checking title of the task with id=43987": true,
+					"Checking answer of the task with id=43987": true,
+					"Status code is 204: task with id 43987 has been deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43988": true,
+					"Checking title of the task with id=43988": true,
+					"Checking answer of the task with id=43988": true,
+					"Status code is 204: task with id 43988 has been deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43989": true,
+					"Checking title of the task with id=43989": true,
+					"Checking answer of the task with id=43989": true,
+					"Status code is 204: task with id 43989 has been deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43990": true,
+					"Checking title of the task with id=43990": true,
+					"Checking answer of the task with id=43990": true,
+					"Status code is 204: task with id 43990 has been deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43991": true,
+					"Checking title of the task with id=43991": true,
+					"Checking answer of the task with id=43991": true,
+					"Status code is 204: task with id 43991 has been deleted": true
+				},
+				{
+					"Status code is 201": true,
+					"Checking that new task has generated id": true,
+					"Checking text of the task with id=43992": true,
+					"Checking title of the task with id=43992": true,
+					"Checking answer of the task with id=43992": true,
+					"Status code is 204: task with id 43992 has been deleted": true
+				}
+			]
+		}
+	],
+	"count": 7,
+	"totalTime": 1573,
+	"collection": {
+		"requests": [
+			{
+				"id": "4c0bc8bb-47d9-4ea1-905d-70bfff031c6b",
+				"method": "POST"
+			}
+		]
+	}
+}
