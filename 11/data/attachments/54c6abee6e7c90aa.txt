@@ -1,0 +1,4 @@
+{
+    "id": 44616,
+    "answer": "Innovative human-resource strategy"
+}

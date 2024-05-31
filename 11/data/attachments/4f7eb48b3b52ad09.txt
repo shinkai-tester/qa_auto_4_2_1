@@ -1,0 +1,5 @@
+{
+    "login": null,
+    "email": "shurka_86@elmira.info",
+    "password": "My78oSwPKRZbqd6"
+}

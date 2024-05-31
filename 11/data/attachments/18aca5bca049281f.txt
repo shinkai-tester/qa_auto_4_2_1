@@ -1,0 +1,6 @@
+{
+    "id": 123,
+    "text": "If we navigate the matrix, we can get to the USB driver through the redundant CSS protocol!",
+    "answer": "Synergized dedicated intranet",
+    "title": "blue Soft interface"
+}

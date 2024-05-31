@@ -1,0 +1,5 @@
+{
+  "login": "shurka_826",
+  "email": "shurka_674@liliane.org",
+  "password": 1234
+}

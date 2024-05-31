@@ -1,0 +1,23 @@
+const getTokenRequest = {
+    url: pm.environment.get("basic_url") + "/api/authenticate",
+    method: 'POST',
+    header: 'Content-Type:application/json',
+    body: {
+        mode: 'raw',
+        raw: JSON.stringify({
+            "username": pm.environment.get("admin"),
+            "password": pm.environment.get("admin"),
+            "remeberMe": true
+        })
+    }
+};
+
+
+pm.sendRequest(getTokenRequest, (err, res) => {
+    if (err) {
+        console.log(err);
+    } else {
+        const jsonData = res.json();
+        pm.environment.set("bearerToken", jsonData.id_token);
+    }
+});

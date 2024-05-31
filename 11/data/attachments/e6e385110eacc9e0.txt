@@ -1,0 +1,4 @@
+{
+    "email": "shurka_341@maxie.net",
+    "password": "u6_0iHPbxOmLnfR"
+}
