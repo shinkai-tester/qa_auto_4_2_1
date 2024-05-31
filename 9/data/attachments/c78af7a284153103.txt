@@ -1,0 +1,4 @@
+{
+    "id": 44487,
+    "answer": "Right-sized 6th generation process improvement"
+}

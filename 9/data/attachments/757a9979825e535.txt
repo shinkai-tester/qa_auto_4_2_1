@@ -1,0 +1,6 @@
+{
+    "id": 44486,
+    "text": "You can't bypass the capacitor without hacking the mobile IB microchip!",
+    "answer": "Stand-alone discrete middleware",
+    "title": "Regional Movies withdrawal"
+}

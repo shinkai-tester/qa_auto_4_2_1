@@ -1,0 +1,4 @@
+{
+    "id": 44487,
+    "text": "You can't calculate the card without compressing the open-source FTP pixel!"
+}

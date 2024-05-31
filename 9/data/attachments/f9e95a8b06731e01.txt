@@ -1,0 +1,8 @@
+{
+    "login": "shurka_213",
+    "email": "shurka_523@larry.info",
+    "password": "RWSoQjri_rrwAA3",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}
