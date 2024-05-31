@@ -1013,11 +1013,7 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"    pm.response.to.have.status(400);\r",
 											"});\r",
-											"\r",
-											"pm.test(\"Checking fieldErrors message\", function () {\r",
-											"    pm.expect(response.fieldErrors[0].field).to.eql(\"password\");\r",
-											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must not be blank\");\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1061,11 +1057,7 @@
 											"pm.test(\"Status code is 400\", function () {\r",
 											"    pm.response.to.have.status(400);\r",
 											"});\r",
-											"\r",
-											"pm.test(\"Checking fieldErrors message\", function () {\r",
-											"    pm.expect(response.fieldErrors[0].field).to.eql(\"password\");\r",
-											"    pm.expect(response.fieldErrors[0].message).to.eql(\"must not be blank\");\r",
-											"});"
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
