@@ -1,0 +1,6 @@
+{
+    "id": 123,
+    "text": "Try to reboot the PCI alarm, maybe it will transmit the neural firewall!",
+    "answer": "Diverse incremental artificial intelligence",
+    "title": "Customer Future"
+}

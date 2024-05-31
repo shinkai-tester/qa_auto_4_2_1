@@ -1,0 +1,12 @@
+{
+    "Content-Type": "application/json",
+    "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbl9hdXRvbWF0aW9uIiwiZXhwIjoxNzE3MjA3ODE3LCJhdXRoIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcxNzEyMTQxN30.hMhkP4kpyM5sGcAfx5KYOjHsdUaZ4BpG04lGaC2pqdpjGfLPAzuwPCwnblgy-MXNIZ9uiA0le3dku7HVI6jBtQ",
+    "User-Agent": "PostmanRuntime/7.37.1",
+    "Accept": "*/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "2c611bce-af17-4b46-bdd5-077a17fba3cc",
+    "Host": "sqlverifier-staging-08050d656f7a.herokuapp.com",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Content-Length": "67"
+}

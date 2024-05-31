@@ -1,0 +1,4 @@
+{
+    "email": "shurka_829@nasir.net",
+    "password": "ZpnHuxWy5G_0UAP"
+}

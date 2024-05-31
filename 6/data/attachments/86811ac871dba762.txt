@@ -1,0 +1,5 @@
+{
+    "login": 1234,
+    "email": "shurka_995@gideon.com",
+    "password": "3kuCX_GKRjhiuFG"
+}
