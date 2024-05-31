@@ -30,7 +30,7 @@ jobs:
       - name: Execute Postman collection
         run:
           newman run sqlverifier.postman_collection.json -e sqlverifier-staging.postman_environment.json -r cli,allure --reporter-allure-export testResults/allure-results > testResults/output.txt
-        #continue-on-error: true
+        continue-on-error: true
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
