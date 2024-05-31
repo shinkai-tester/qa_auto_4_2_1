@@ -1,0 +1,1 @@
+{"type":"https://www.jhipster.tech/problem/problem-with-message","title":"Not Found","status":404,"detail":"404 NOT_FOUND","instance":"/api/tasks/44348","message":"error.http.404","path":"/api/tasks/44348"}

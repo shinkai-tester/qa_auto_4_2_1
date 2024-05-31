@@ -1,0 +1,8 @@
+{
+    "login": "shurka_30",
+    "email": "shurka_69@seamus.biz",
+    "password": "YtyyTxGMkYe3sMk",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}
