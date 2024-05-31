@@ -1,12 +1,13 @@
 name: Sqlverifier API Testing
 
-on: 
+on:
   #push:
-  #pull_request:
-  #workflow_dispatch:
+    #branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
   schedule:
-  # Runs every day at 3:05 AM UTC
-  - cron: '5 3 * * *'
+    - cron: '25 3 * * *'
 
 jobs:
   run-sqlverifier-api-tests:
