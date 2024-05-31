@@ -1,0 +1,5 @@
+{
+  "login": "shurka_843",
+  "email": "shurka_833@trevion.org",
+  "password": 1234
+}

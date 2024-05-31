@@ -1,0 +1,8 @@
+{
+    "login": "shurka_405",
+    "email": "shurka_480@barbara.biz",
+    "password": "wUiD1X_Zq0HhnFc",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}

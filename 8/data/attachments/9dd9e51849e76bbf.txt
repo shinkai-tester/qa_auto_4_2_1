@@ -1,0 +1,4 @@
+{
+  "text": "Use the virtual AI feed, then you can transmit the mobile transmitter!",
+  "answer": "Reduced 24/7 leverage"
+}  

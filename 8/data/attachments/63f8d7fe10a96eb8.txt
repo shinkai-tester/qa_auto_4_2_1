@@ -1,0 +1,4 @@
+{
+    "id": 44477,
+    "answer": "Function-based tangible solution"
+}

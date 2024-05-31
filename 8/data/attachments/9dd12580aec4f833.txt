@@ -1,0 +1,6 @@
+{
+    "id": 44477,
+    "text": "I'll bypass the wireless GB firewall, that should firewall the COM panel!",
+    "answer": "Synchronised foreground instruction set",
+    "title": "implement Global hacking"
+}

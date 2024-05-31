@@ -1,0 +1,5 @@
+{
+    "login": 1234,
+    "email": "shurka_377@talon.info",
+    "password": "awu_CdLvdbMnC_x"
+}

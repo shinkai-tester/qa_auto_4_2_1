@@ -1,0 +1,4 @@
+{
+    "email": "shurka_505@nelda.org",
+    "password": "n9gjl8GJVv4FShG"
+}

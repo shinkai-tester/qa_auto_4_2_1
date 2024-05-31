@@ -1,0 +1,5 @@
+{
+  "login": "shurka_287",
+  "email": "shurka_830@melisa.biz",
+  "password": "Pf3TVjOBCO2ohLOg77a7Of8jZ1WQY758wd0Yp7RjEVOKxSqZmISgjbsQPtuqZ2d3FYHnPMgcdQyXvnKhJAD4xu9tadEfWxpLOtapX"
+}
