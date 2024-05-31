@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "2d03272e-4b90-47d2-8aaa-b2b7df4a3ed5",
+		"_postman_id": "6d723b39-211c-4b52-9e6a-a83fcfb7bffe",
 		"name": "sqlverifier",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5430351"
 	},
 	"item": [
 		{
-			"name": "Lesson 4.1",
+			"name": "Registration_and_authentication",
 			"item": [
 				{
 					"name": "User_registraion",
@@ -2462,7 +2462,7 @@
 			]
 		},
 		{
-			"name": "Lesson 4.2",
+			"name": "Task_operations",
 			"item": [
 				{
 					"name": "Create_task",
@@ -4348,90 +4348,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Create_task_data_from_file",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"let response = pm.response.json();\r",
-									"\r",
-									"let expectedText = JSON.parse(pm.request.body.raw).text;\r",
-									"let expectedAnswer = JSON.parse(pm.request.body.raw).answer;\r",
-									"let expectedTitle = JSON.parse(pm.request.body.raw).title;\r",
-									"\r",
-									"pm.test(\"Checking that new task has generated id\", function () {\r",
-									"    pm.expect(response.id).to.be.a('number').and.to.be.above(0);\r",
-									"});\r",
-									"let taskId = response.id;\r",
-									"\r",
-									"pm.test(\"Checking text of the task with id=\" + taskId, function () {\r",
-									"    pm.expect(response.text).to.eql(expectedText);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Checking title of the task with id=\" + taskId, function () {\r",
-									"    pm.expect(response.title).to.eql(expectedTitle);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Checking answer of the task with id=\" + taskId, function () {\r",
-									"    pm.expect(response.answer).to.eql(expectedAnswer);\r",
-									"});\r",
-									"\r",
-									"const cleanupTask = {\r",
-									"    url: pm.environment.get(\"basic_url\") + \"/api/tasks/\" + taskId,\r",
-									"    method: 'DELETE',\r",
-									"    header: {\r",
-									"        'Content-Type': 'application/json',\r",
-									"        'Authorization': 'Bearer ' + pm.environment.get(\"bearerToken\")\r",
-									"    }\r",
-									"};\r",
-									"\r",
-									"\r",
-									"pm.sendRequest(cleanupTask, function (err, response) {\r",
-									"    if (err) {\r",
-									"        console.log(err);\r",
-									"    } else {\r",
-									"        pm.test(\"Status code is 204: task with id \" + taskId + \" has been deleted\", function () {\r",
-									"            pm.expect(response).to.have.status(204);\r",
-									"        });\r",
-									"    }\r",
-									"});"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"text\": \"{{task_text}}\",\r\n  \"answer\": \"{{task_answer}}\",\r\n  \"title\": \"{{task_title}}\"\r\n}  \r\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{basic_url}}/api/tasks",
-							"host": [
-								"{{basic_url}}"
-							],
-							"path": [
-								"api",
-								"tasks"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}
