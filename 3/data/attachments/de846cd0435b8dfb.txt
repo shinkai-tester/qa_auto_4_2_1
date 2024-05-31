@@ -1,0 +1,8 @@
+{
+    "login": "shurka_361",
+    "email": "shurka_923@wilfred.com",
+    "password": "6uCqp30G3gvcEkW",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}

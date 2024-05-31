@@ -1,0 +1,5 @@
+{
+    "login": null,
+    "email": "shurka_201@madonna.biz",
+    "password": "poyaGlDg5zv9Cly"
+}

@@ -1,0 +1,5 @@
+{
+    "username": "user_student",
+    "password": "1234",
+    "rememberMe": true
+}

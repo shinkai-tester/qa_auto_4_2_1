@@ -1,0 +1,5 @@
+{
+  "login": "shurka 944",
+  "email": "shurka_975@maynard.name",
+  "password": "JCsAqbeiHHI9Oft"
+}

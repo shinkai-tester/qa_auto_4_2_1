@@ -1,0 +1,4 @@
+{
+    "login": "shurka_227",
+    "email": "shurka_862@domingo.biz"
+}

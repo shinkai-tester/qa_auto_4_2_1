@@ -1,0 +1,5 @@
+{
+  "login": "shurka_752",
+  "email": "shurka_976@rebecca.info",
+  "password": "Pf3TVjOBCO2ohLOg77a7Of8jZ1WQY758wd0Yp7RjEVOKxSqZmISgjbsQPtuqZ2d3FYHnPMgcdQyXvnKhJAD4xu9tadEfWxpLOtapX"
+}

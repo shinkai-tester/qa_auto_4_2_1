@@ -1,0 +1,4 @@
+{
+    "email": "shurka_892@nyasia.org",
+    "password": "_9vTuaEfAOLFsDv"
+}

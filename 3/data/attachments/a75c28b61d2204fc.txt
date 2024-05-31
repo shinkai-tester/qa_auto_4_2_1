@@ -1,0 +1,5 @@
+{
+    "login": "",
+    "email": "shurka_665@polly.biz",
+    "password": "TZkS0YrWcYiLoyk"
+}
