@@ -1,0 +1,5 @@
+{
+  "login": "shurka_22",
+  "email": "shurka_890@tomas.name",
+  "password": "Pf3TVjOBCO2ohLOg77a7Of8jZ1WQY758wd0Yp7RjEVOKxSqZmISgjbsQPtuqZ2d3FYHnPMgcdQyXvnKhJAD4xu9tadEfWxpLOtapX"
+}

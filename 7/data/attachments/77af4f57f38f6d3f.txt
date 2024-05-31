@@ -1,0 +1,1 @@
+{"type":"https://www.jhipster.tech/problem/problem-with-message","title":"Unauthorized","status":401,"detail":"Bad credentials","instance":"/api/authenticate","message":"error.http.401","path":"/api/authenticate"}

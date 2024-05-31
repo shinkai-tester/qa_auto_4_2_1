@@ -1,0 +1,5 @@
+{
+    "login": "shurka_877",
+    "email": "shurka_479@zita.biz",
+    "password": "c5vI5mqRKWYJHNX"
+}

@@ -1,0 +1,4 @@
+{
+    "email": "shurka_156@brionna.info",
+    "password": "9Cl1AukbPQrO2S3"
+}

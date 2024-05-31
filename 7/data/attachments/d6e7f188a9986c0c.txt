@@ -1,0 +1,4 @@
+{
+  "text": "Try to program the COM microchip, maybe it will reboot the digital alarm!",
+  "answer": "Multi-layered needs-based knowledge user"
+}  

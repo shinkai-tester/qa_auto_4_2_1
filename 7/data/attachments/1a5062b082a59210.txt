@@ -1,0 +1,5 @@
+{
+    "username": "admin_automation",
+    "password": "admin_automation",
+    "rememberMe": true
+}

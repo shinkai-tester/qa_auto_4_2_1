@@ -1,0 +1,23 @@
+{
+    "Server": "Cowboy",
+    "Report-To": "{\"group\":\"heroku-nel\",\"max_age\":3600,\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?ts=1717122852&sid=812dcc77-0bd0-43b1-a5f1-b25750382959&s=nVh9GbTf%2BIalI15%2Fx29o%2Bs2Z1KxTvqTHexUUPZsGxs8%3D\"}]}",
+    "Reporting-Endpoints": "heroku-nel=https://nel.heroku.com/reports?ts=1717122852&sid=812dcc77-0bd0-43b1-a5f1-b25750382959&s=nVh9GbTf%2BIalI15%2Fx29o%2Bs2Z1KxTvqTHexUUPZsGxs8%3D",
+    "Nel": "{\"report_to\":\"heroku-nel\",\"max_age\":3600,\"success_fraction\":0.005,\"failure_fraction\":0.05,\"response_headers\":[\"Via\"]}",
+    "Connection": "close",
+    "Content-Encoding": "gzip",
+    "Expires": "0",
+    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+    "X-Xss-Protection": "0",
+    "Pragma": "no-cache",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Content-Security-Policy": "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:",
+    "Date": "Fri, 31 May 2024 02:34:12 GMT",
+    "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbl9hdXRvbWF0aW9uIiwiZXhwIjoxNzE5NzE0ODUyLCJhdXRoIjoiUk9MRV9BRE1JTiIsImlhdCI6MTcxNzEyMjg1Mn0.khR1uNbIxO5eYw2kb-NqB6skgTcmcI_gr4m4h0rI45Qq4EH5pPHiOQpxKFBf27PVi4YWPJxX2jRdPgywWRldmg",
+    "Vary": "Access-Control-Request-Headers",
+    "X-Content-Type-Options": "nosniff",
+    "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+    "Permissions-Policy": "camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()",
+    "Content-Type": "application/json",
+    "Via": "1.1 vegur"
+}

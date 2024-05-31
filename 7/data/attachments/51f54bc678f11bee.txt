@@ -1,0 +1,4 @@
+{
+    "id": 44467,
+    "answer": "Stand-alone value-added framework"
+}
