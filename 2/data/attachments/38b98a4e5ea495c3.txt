@@ -1,0 +1,5 @@
+{
+  "login": "shurka_339",
+  "email": "shurka_39@leda.com",
+  "password": 1234
+}

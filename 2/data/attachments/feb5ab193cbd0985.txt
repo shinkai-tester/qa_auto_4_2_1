@@ -1,0 +1,4 @@
+{
+  "text": "The XSS transmitter is down, index the mobile card so we can connect the FTP port!",
+  "answer": "Diverse leading edge portal"
+}  

@@ -1,0 +1,8 @@
+{
+    "login": "shurka_794",
+    "email": "shurka_136@mathias.org",
+    "password": "PoCJpD0lX02TrOz",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}

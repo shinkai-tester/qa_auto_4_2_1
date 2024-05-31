@@ -1,0 +1,5 @@
+{
+  "login": "shurka_139",
+  "email": "shurka_143@misael.info",
+  "password": "Pf3TVjOBCO2ohLOg77a7Of8jZ1WQY758wd0Yp7RjEVOKxSqZmISgjbsQPtuqZ2d3FYHnPMgcdQyXvnKhJAD4xu9tadEfWxpLOtapX"
+}
