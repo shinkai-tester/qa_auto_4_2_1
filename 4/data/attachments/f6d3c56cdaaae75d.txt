@@ -1,0 +1,8 @@
+{
+    "login": "shurka_847",
+    "email": "shurka_147@claudie.com",
+    "password": "TN2V828Cceec1OH",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}

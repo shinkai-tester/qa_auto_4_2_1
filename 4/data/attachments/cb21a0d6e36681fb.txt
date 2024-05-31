@@ -1,0 +1,5 @@
+{
+  "text": "The EXE monitor is down, hack the multi-byte microchip so we can navigate the PNG array!",
+  "answer": "Distributed zero tolerance extranet",
+  "title": "Jewelery index"
+}  

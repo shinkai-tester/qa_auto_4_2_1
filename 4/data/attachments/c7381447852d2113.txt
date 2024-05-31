@@ -1,0 +1,5 @@
+{
+    "login": "",
+    "email": "shurka_524@tillman.org",
+    "password": "WmmvbOji1zQrDgp"
+}

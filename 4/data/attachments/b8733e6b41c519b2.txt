@@ -1,0 +1,5 @@
+{
+    "login": null,
+    "email": "shurka_773@lupe.net",
+    "password": "Pqi4Cl4WHy4EAjp"
+}
