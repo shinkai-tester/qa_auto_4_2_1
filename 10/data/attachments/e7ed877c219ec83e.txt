@@ -1,0 +1,5 @@
+{
+    "login": 1234,
+    "email": "shurka_398@alfreda.biz",
+    "password": "OgR7D_NfuERXhRy"
+}

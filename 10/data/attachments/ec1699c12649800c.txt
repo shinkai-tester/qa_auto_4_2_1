@@ -1,0 +1,5 @@
+{
+    "login": null,
+    "email": "shurka_822@lafayette.com",
+    "password": "yscuafQgRsLJtYQ"
+}

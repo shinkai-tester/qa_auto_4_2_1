@@ -1,0 +1,4 @@
+{
+    "email": "shurka_920@elouise.com",
+    "password": "nC2q1Vp_qNQxFv6"
+}

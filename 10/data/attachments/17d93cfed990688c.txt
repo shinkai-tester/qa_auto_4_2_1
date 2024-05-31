@@ -1,0 +1,5 @@
+{
+    "login": "um5j5l01znw5w1j89xv0pk655xx7395n3msjjz4frn6akb8ny78",
+    "email": "shurka_31@steve.com",
+    "password": "faQZbjRy_OvqWX1"
+}

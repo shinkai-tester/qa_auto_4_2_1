@@ -1,0 +1,5 @@
+{
+    "login": "",
+    "email": "shurka_355@brooke.org",
+    "password": "VZUc71cuYkZQsXh"
+}

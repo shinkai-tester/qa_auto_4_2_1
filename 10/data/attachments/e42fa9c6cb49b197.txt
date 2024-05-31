@@ -1,0 +1,8 @@
+{
+    "login": "shurka_54",
+    "email": "shurka_445@tyler.biz",
+    "password": "0WOxd93GQQeeTpM",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}
