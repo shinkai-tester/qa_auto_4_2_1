@@ -1,0 +1,6 @@
+{
+    "id": 123,
+    "text": "We need to navigate the cross-platform IB monitor!",
+    "answer": "Centralized exuding matrices",
+    "title": "Clothing Account deliverables"
+}

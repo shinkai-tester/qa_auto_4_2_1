@@ -1,0 +1,8 @@
+{
+    "login": "shurka_756",
+    "email": "shurka_168@hilario.info",
+    "password": "MD9OrFM0H4_jJYp",
+    "authorities": [
+        "ROLE_BOSS"
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "id": 44905,
+    "text": "Try to copy the PCI sensor, maybe it will parse the solid state capacitor!",
+    "answer": "Polarised bifurcated info-mediaries",
+    "title": "Steel Gloves"
+}

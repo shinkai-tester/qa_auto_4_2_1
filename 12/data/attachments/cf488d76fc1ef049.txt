@@ -1,0 +1,5 @@
+{
+  "login": "shurka_215",
+  "email": "shurka_535therese.com",
+  "password": "ETFsCH0uIsrhmZw"
+}

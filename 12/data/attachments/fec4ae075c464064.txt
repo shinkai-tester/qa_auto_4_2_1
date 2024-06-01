@@ -1,0 +1,4 @@
+{
+    "email": "shurka_15@estel.org",
+    "password": "0BtoHdT9pIO8e71"
+}

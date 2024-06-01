@@ -1,0 +1,6 @@
+{
+    "id": 44905,
+    "text": "You can't index the card without overriding the digital COM hard drive!",
+    "answer": "Face to face needs-based implementation",
+    "title": "bypassing Village Pants indexing one-to-one"
+}

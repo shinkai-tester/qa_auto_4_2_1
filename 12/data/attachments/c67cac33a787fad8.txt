@@ -1,0 +1,5 @@
+{
+    "login": "shurka_129",
+    "email": "shurka_787@carley.org",
+    "password": "35LcsTxuu6C_N2w"
+}
