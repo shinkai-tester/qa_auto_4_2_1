@@ -1,0 +1,6 @@
+{
+    "id": 123,
+    "text": "We need to back up the wireless RSS capacitor!",
+    "answer": "Compatible logistical artificial intelligence",
+    "title": "Technician background"
+}

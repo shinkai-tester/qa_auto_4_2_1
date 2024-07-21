@@ -1,0 +1,4 @@
+{
+    "login": "shurka_312",
+    "password": "eUna2cHRaxfpScu"
+}

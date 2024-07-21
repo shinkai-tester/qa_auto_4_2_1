@@ -1,0 +1,5 @@
+{
+    "login": 1234,
+    "email": "shurka_633@naomi.org",
+    "password": "3e7hUqjn2_1_58w"
+}

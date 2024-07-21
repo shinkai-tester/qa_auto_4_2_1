@@ -1,0 +1,5 @@
+{
+    "login": "",
+    "email": "shurka_730@herminio.org",
+    "password": "P4zjeQTEVdzUWvB"
+}

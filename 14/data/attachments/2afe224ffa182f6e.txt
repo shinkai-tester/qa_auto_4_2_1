@@ -1,0 +1,1 @@
+{"type":"https://www.jhipster.tech/problem/invalid-password","title":"Bad Request","status":400,"detail":"400 BAD_REQUEST, ProblemDetailWithCause[type='https://www.jhipster.tech/problem/invalid-password', title='Bad Request', status=400, detail='null', instance='null', properties='null']","instance":"/api/register","message":"error.http.400","path":"/api/register"}
